@@ -23,7 +23,7 @@ app.add_middleware(
 
 # Initialize DeepSeek LLM
 llm = ChatDeepSeek(
-    model="deepseek-chat",
+    model_name="deepseek-llm-67b-chat",
     deepseek_api_key=DEEPSEEK_API_KEY,
     temperature=0.7,
     max_tokens=1024  # Prevents empty responses
