@@ -76,3 +76,8 @@ def generate_consent(request: ConsentRequest):
 @app.get("/audit-trail")
 def get_audit_trail():
     return {"audit_trail": audit_trail}
+
+if __name__ == "__main__":
+    import uvicorn
+    PORT = int(os.getenv("PORT", 8000))  # Use Railway's assigned port or default to 8000
+    uvicorn.run(app, host="0.0.0.0", port=PORT)
