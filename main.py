@@ -1,17 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-# from langchain.chat_models import ChatOpenAI
 from langchain_deepseek import ChatDeepSeek
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware  
-import json
-from dotenv import load_dotenv
 import os
-
+from dotenv import load_dotenv
 
 load_dotenv()
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
-
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -25,10 +21,12 @@ app.add_middleware(
     allow_headers=["*"],  
 )
 
-# Initialize Gemini LLM
+# Initialize DeepSeek LLM
 llm = ChatDeepSeek(
     model="deepseek-chat",
-    deepseek_api_key=DEEPSEEK_API_KEY
+    deepseek_api_key=DEEPSEEK_API_KEY,
+    temperature=0.7,
+    max_tokens=1024  # Prevents empty responses
 )
 
 audit_trail = []  # In-memory audit trail
@@ -56,7 +54,7 @@ def generate_consent(request: ConsentRequest):
     
     try:
         response = llm.invoke(messages)
-        agreement_text = response.content
+        agreement_text = response  # Corrected response handling
         
         # Save to audit trail
         audit_entry = {
@@ -80,5 +78,5 @@ def get_audit_trail():
 
 if __name__ == "__main__":
     import uvicorn
-    PORT = int(os.getenv("PORT", 8000))  # Use Railway's assigned port or default to 8000
+    PORT = int(os.getenv("PORT", 8000))  # Uses Railway’s assigned port
     uvicorn.run(app, host="0.0.0.0", port=PORT)
