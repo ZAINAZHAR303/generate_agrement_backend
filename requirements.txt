@@ -5,4 +5,4 @@ openai
 pydantic
 python-dotenv
 
-langchain_deepseek
+langchain_google_genai
