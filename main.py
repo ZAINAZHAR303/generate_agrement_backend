@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 # from langchain.chat_models import ChatOpenAI
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_deepseek import ChatDeepSeek
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware  
 import json
@@ -10,7 +10,8 @@ import os
 
 
 load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -25,9 +26,9 @@ app.add_middleware(
 )
 
 # Initialize Gemini LLM
-llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
-    google_api_key=GEMINI_API_KEY
+llm = ChatDeepSeek(
+    model="deepseek-chat",
+    deepseek_api_key=DEEPSEEK_API_KEY
 )
 
 audit_trail = []  # In-memory audit trail
