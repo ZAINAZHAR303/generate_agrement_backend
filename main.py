@@ -5,7 +5,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware  
 
-from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 
 import os
